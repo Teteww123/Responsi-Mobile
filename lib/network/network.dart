@@ -4,7 +4,6 @@ import 'package:http/http.dart' as http;
 class Network {
   static const String _baseUrl = 'https://resp-api-three.vercel.app';
 
-  
   static Future<List<dynamic>> getPhones() async {
     final response = await http.get(Uri.parse('$_baseUrl/phones'));
     if (response.statusCode == 200) {
@@ -14,7 +13,6 @@ class Network {
       throw Exception('Failed to load phones');
     }
   }
-
 
   static Future<Map<String, dynamic>> getPhoneDetail(int id) async {
     final response = await http.get(Uri.parse('$_baseUrl/phone/$id'));
@@ -26,7 +24,6 @@ class Network {
     }
   }
 
-  
   static Future<void> createPhone(Map<String, dynamic> body) async {
     final response = await http.post(
       Uri.parse('$_baseUrl/phone'),
@@ -38,7 +35,6 @@ class Network {
     }
   }
 
-  
   static Future<void> updatePhone(int id, Map<String, dynamic> body) async {
     final response = await http.put(
       Uri.parse('$_baseUrl/phone/$id'),
@@ -50,7 +46,6 @@ class Network {
     }
   }
 
-  // DELETE phone
   static Future<void> deletePhone(int id) async {
     final response = await http.delete(Uri.parse('$_baseUrl/phone/$id'));
     if (response.statusCode != 200) {
@@ -58,4 +53,5 @@ class Network {
     }
   }
 }
+
 

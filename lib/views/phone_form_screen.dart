@@ -29,7 +29,7 @@ class _PhoneFormScreenState extends State<PhoneFormScreen> implements PhoneView 
     _presenter = PhonePresenter(this);
     _nameCtrl = TextEditingController(text: widget.phone?.name ?? "");
     _brandCtrl = TextEditingController(text: widget.phone?.brand ?? "");
-    _priceCtrl = TextEditingController(text: widget.phone?.price.toString() ?? "");
+    _priceCtrl = TextEditingController(text: widget.phone != null ? widget.phone!.price.toString() : "");
     _specCtrl = TextEditingController(text: widget.phone?.specification ?? "");
   }
 
@@ -49,7 +49,6 @@ class _PhoneFormScreenState extends State<PhoneFormScreen> implements PhoneView 
       name: _nameCtrl.text,
       brand: _brandCtrl.text,
       price: int.tryParse(_priceCtrl.text) ?? 0,
-      imgUrl: widget.phone?.imgUrl ?? '', // img_url auto/random dari backend
       specification: _specCtrl.text,
     );
     setState(() => _isLoading = true);
@@ -59,7 +58,7 @@ class _PhoneFormScreenState extends State<PhoneFormScreen> implements PhoneView 
       await _presenter.createPhone(phone);
     }
     setState(() => _isLoading = false);
-    if (_error == null) Navigator.pop(context);
+    if (_error == null && mounted) Navigator.pop(context); // Kembali ke list/detail
   }
 
   @override
@@ -113,7 +112,7 @@ class _PhoneFormScreenState extends State<PhoneFormScreen> implements PhoneView 
                     const SizedBox(height: 24),
                     ElevatedButton(
                       onPressed: _save,
-                      child: Text(widget.isEdit ? "Update" : "Create"),
+                      child: Text(widget.isEdit ? "Update" : "Simpan"),
                     ),
                   ],
                 ),
